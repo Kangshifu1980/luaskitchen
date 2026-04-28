@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lua's Kitchen — Vietnamese Cooking Classes in Saigon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F7F3EC;
+  --cream-dark: #EDE5D8;
+  --green: #3D5A3E;
+  --green-light: #6A8F5C;
+  --green-pale: #EBF0E6;
+  --terra: #C0654A;
+  --terra-pale: #F5E6E0;
+  --charcoal: #2A2420;
+  --charcoal-mid: #5C4A3E;
+  --charcoal-light: #9C8878;
+  --white: #FDFAF6;
+  --gold: #C9A96E;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--charcoal); font-size:16px; line-height:1.7; overflow-x:hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:16px 64px;
+  background:rgba(247,243,236,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(61,90,62,0.1);
+}
+.nav-brand {
+  font-family:'Lora',serif; font-size:20px; font-weight:400;
+  color:var(--green); text-decoration:none; letter-spacing:0.02em;
+}
+.nav-brand em { font-style:italic; color:var(--terra); }
+.nav-links { display:flex; gap:28px; list-style:none; }
+.nav-links a { font-size:13px; font-weight:400; color:var(--charcoal-mid); text-decoration:none; letter-spacing:0.05em; transition:color 0.2s; }
+.nav-links a:hover { color:var(--green); }
+.nav-book {
+  background:var(--green); color:var(--white);
+  padding:10px 24px; font-size:13px; font-weight:500;
+  letter-spacing:0.05em; text-decoration:none; transition:background 0.2s;
+}
+.nav-book:hover { background:var(--green-light); }
+
+/* HERO */
+.hero {
+  min-height:100vh;
+  display:grid; grid-template-columns:1fr 1fr;
+  padding-top:68px;
+  position:relative;
+}
+.hero-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px 64px;
+  background:var(--cream);
+}
+.hero-tag {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:11px; font-weight:500; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--green);
+  margin-bottom:28px;
+}
+.hero-tag::before { content:''; width:28px; height:1px; background:var(--green); }
+h1 {
+  font-family:'Lora',serif; font-size:clamp(40px,5vw,64px);
+  font-weight:400; line-height:1.1; color:var(--charcoal);
+  margin-bottom:12px;
+}
+h1 em { font-style:italic; color:var(--green); }
+.hero-location {
+  display:flex; align-items:center; gap:8px;
+  font-size:14px; color:var(--charcoal-light); margin-bottom:32px;
+}
+.hero-location::before { content:'📍'; font-size:14px; }
+.hero-desc {
+  font-size:18px; font-weight:300; color:var(--charcoal-mid);
+  margin-bottom:48px; line-height:1.8; max-width:440px;
+}
+.hero-ctas { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:56px; }
+.btn-green {
+  display:inline-block; background:var(--green); color:var(--white);
+  padding:15px 36px; font-size:14px; font-weight:500;
+  letter-spacing:0.05em; text-decoration:none; transition:all 0.2s;
+}
+.btn-green:hover { background:var(--green-light); transform:translateY(-1px); }
+.btn-outline-green {
+  display:inline-block; border:1.5px solid var(--green); color:var(--green);
+  padding:15px 36px; font-size:14px; font-weight:400;
+  letter-spacing:0.05em; text-decoration:none; transition:all 0.2s;
+}
+.btn-outline-green:hover { background:var(--green-pale); }
+.hero-trust {
+  display:flex; gap:32px; flex-wrap:wrap;
+}
+.trust-item { display:flex; flex-direction:column; gap:2px; }
+.trust-num {
+  font-family:'Lora',serif; font-size:30px; font-weight:400;
+  color:var(--terra); line-height:1;
+}
+.trust-label { font-size:12px; color:var(--charcoal-light); font-weight:300; letter-spacing:0.05em; }
+
+.hero-right {
+  position:relative; overflow:hidden;
+  display:grid; grid-template-rows:60% 40%;
+}
+.hero-img-main {
+  overflow:hidden; position:relative;
+}
+.hero-img-main img {
+  width:100%; height:100%; object-fit:cover;
+  filter:brightness(0.9) saturate(0.95);
+}
+.hero-img-row { display:grid; grid-template-columns:1fr 1fr; }
+.hero-img-small { overflow:hidden; }
+.hero-img-small img {
+  width:100%; height:100%; object-fit:cover;
+  filter:brightness(0.88) saturate(0.9);
+  transition:transform 0.5s;
+}
+.hero-img-small:hover img { transform:scale(1.04); }
+.hero-float-badge {
+  position:absolute; bottom:24px; left:24px;
+  background:var(--white); padding:14px 20px;
+  box-shadow:0 4px 24px rgba(42,36,32,0.12);
+  display:flex; align-items:center; gap:12px;
+}
+.badge-stars { color:var(--gold); font-size:14px; letter-spacing:2px; }
+.badge-text { font-size:13px; color:var(--charcoal-mid); font-weight:300; }
+.badge-text strong { display:block; font-weight:500; color:var(--charcoal); font-size:14px; }
+
+/* SECTION SHARED */
+section { padding:100px 64px; }
+.section-tag {
+  font-size:11px; font-weight:500; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--green);
+  display:flex; align-items:center; gap:10px; margin-bottom:20px;
+}
+.section-tag::before { content:''; width:20px; height:1px; background:var(--green); }
+.section-title {
+  font-family:'Lora',serif; font-size:clamp(28px,3.5vw,44px);
+  font-weight:400; line-height:1.2; color:var(--charcoal); margin-bottom:16px;
+}
+.section-title em { font-style:italic; color:var(--green); }
+
+/* ABOUT */
+.about {
+  background:var(--white);
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+}
+.about-img { position:relative; }
+.about-img img {
+  width:100%; aspect-ratio:4/5; object-fit:cover;
+  filter:brightness(0.9) saturate(0.9);
+}
+.about-img-tag {
+  position:absolute; bottom:-20px; right:-20px;
+  background:var(--green); color:var(--white);
+  padding:20px 28px; text-align:center;
+}
+.about-img-tag .num {
+  font-family:'Lora',serif; font-size:36px; font-weight:400;
+  display:block; line-height:1;
+}
+.about-img-tag .lbl { font-size:11px; font-weight:300; letter-spacing:0.08em; opacity:0.85; }
+.about-text p { font-size:17px; font-weight:300; color:var(--charcoal-mid); margin-bottom:20px; line-height:1.9; }
+.about-quote {
+  border-left:3px solid var(--terra); padding:20px 24px;
+  background:var(--terra-pale); margin:32px 0;
+  font-family:'Lora',serif; font-size:18px; font-style:italic;
+  color:var(--charcoal-mid); line-height:1.7;
+}
+.about-skills {
+  display:flex; gap:12px; flex-wrap:wrap; margin-top:28px;
+}
+.skill-tag {
+  background:var(--green-pale); color:var(--green);
+  font-size:12px; font-weight:500; padding:6px 16px;
+  border-radius:20px; letter-spacing:0.05em;
+}
+
+/* CLASSES */
+.classes { background:var(--cream); }
+.classes-intro { font-size:17px; font-weight:300; color:var(--charcoal-mid); max-width:560px; margin-bottom:64px; line-height:1.9; }
+.classes-featured { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-bottom:28px; }
+.class-card {
+  background:var(--white); overflow:hidden;
+  box-shadow:0 2px 16px rgba(42,36,32,0.06);
+  transition:transform 0.25s, box-shadow 0.25s;
+}
+.class-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(42,36,32,0.1); }
+.class-card.featured { border-top:3px solid var(--terra); }
+.class-card.secondary { border-top:3px solid var(--green); }
+.class-img { height:220px; overflow:hidden; }
+.class-img img { width:100%; height:100%; object-fit:cover; filter:brightness(0.88); transition:transform 0.5s; }
+.class-card:hover .class-img img { transform:scale(1.04); }
+.class-body { padding:28px 32px; }
+.class-meta {
+  display:flex; gap:16px; margin-bottom:16px; flex-wrap:wrap;
+}
+.class-meta-item {
+  display:flex; align-items:center; gap:6px;
+  font-size:12px; color:var(--charcoal-light); font-weight:300;
+}
+.class-meta-item::before { content:''; width:4px; height:4px; background:var(--green); border-radius:50%; }
+.class-name { font-family:'Lora',serif; font-size:22px; font-weight:400; margin-bottom:10px; }
+.class-desc { font-size:14px; font-weight:300; color:var(--charcoal-mid); margin-bottom:20px; line-height:1.7; }
+.class-includes { list-style:none; margin-bottom:24px; }
+.class-includes li {
+  font-size:13px; font-weight:300; color:var(--charcoal-mid);
+  padding:6px 0; border-bottom:1px solid var(--cream-dark);
+  display:flex; align-items:center; gap:10px;
+}
+.class-includes li::before { content:'✓'; color:var(--green); font-weight:500; font-size:13px; }
+.class-includes li:last-child { border-bottom:none; }
+.class-footer {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:20px; border-top:1px solid var(--cream-dark);
+}
+.class-price { font-family:'Lora',serif; font-size:28px; font-weight:400; color:var(--terra); }
+.class-price span { font-size:13px; font-weight:300; color:var(--charcoal-light); font-family:'DM Sans',sans-serif; }
+.btn-book {
+  background:var(--green); color:var(--white);
+  padding:10px 24px; font-size:13px; font-weight:500;
+  text-decoration:none; transition:background 0.2s;
+  letter-spacing:0.05em;
+}
+.btn-book:hover { background:var(--green-light); }
+
+.classes-more { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.class-mini {
+  background:var(--white); padding:24px;
+  border-left:2px solid var(--green-pale);
+  transition:border-color 0.2s, background 0.2s;
+}
+.class-mini:hover { border-color:var(--green); background:var(--green-pale); }
+.class-mini-icon { font-size:24px; margin-bottom:12px; }
+.class-mini-name { font-family:'Lora',serif; font-size:16px; margin-bottom:6px; }
+.class-mini-desc { font-size:13px; font-weight:300; color:var(--charcoal-light); }
+
+/* DISHES */
+.dishes { background:var(--green); padding:100px 64px; }
+.dishes .section-tag { color:rgba(255,255,255,0.6); }
+.dishes .section-tag::before { background:rgba(255,255,255,0.4); }
+.dishes .section-title { color:var(--white); }
+.dishes .section-title em { color:var(--gold); }
+.dishes-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:56px; }
+.dish-item {
+  background:rgba(255,255,255,0.04);
+  padding:32px 28px;
+  transition:background 0.2s;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+.dish-item:hover { background:rgba(255,255,255,0.08); }
+.dish-emoji { font-size:32px; margin-bottom:16px; display:block; }
+.dish-name { font-family:'Lora',serif; font-size:18px; color:var(--white); margin-bottom:8px; }
+.dish-desc { font-size:13px; font-weight:300; color:rgba(255,255,255,0.55); line-height:1.7; }
+
+/* REVIEWS */
+.reviews { background:var(--cream-dark); }
+.reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
+.review-card { background:var(--white); padding:36px 32px; }
+.review-quote { font-family:'Lora',serif; font-size:44px; color:var(--green-light); line-height:0.5; margin-bottom:20px; opacity:0.5; }
+.review-stars { color:var(--gold); font-size:13px; letter-spacing:2px; margin-bottom:16px; }
+.review-text { font-size:15px; font-weight:300; color:var(--charcoal-mid); font-style:italic; margin-bottom:24px; line-height:1.8; }
+.review-author { display:flex; align-items:center; gap:12px; }
+.review-avatar {
+  width:40px; height:40px; border-radius:50%;
+  background:var(--green-pale); border:2px solid var(--green-light);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Lora',serif; font-size:16px; color:var(--green); font-weight:600;
+}
+.review-name { font-weight:500; font-size:14px; }
+.review-source { font-size:12px; color:var(--charcoal-light); font-weight:300; }
+.reviews-rating {
+  margin-top:40px; text-align:center;
+  font-size:14px; color:var(--charcoal-light); font-weight:300;
+}
+.reviews-rating strong { color:var(--charcoal); font-weight:500; }
+
+/* BOOKING */
+.booking {
+  background:var(--white);
+  display:grid; grid-template-columns:1fr 1fr; gap:0;
+}
+.booking-left { padding:100px 64px; }
+.booking-right {
+  background:var(--green);
+  padding:100px 64px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.booking-right .section-tag { color:rgba(255,255,255,0.6); }
+.booking-right .section-tag::before { background:rgba(255,255,255,0.4); }
+.booking-right .section-title { color:var(--white); }
+.booking-right .section-title em { color:var(--gold); }
+.booking-times { margin-top:32px; margin-bottom:40px; }
+.booking-time-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.booking-time-label { font-size:14px; font-weight:400; color:rgba(255,255,255,0.8); }
+.booking-time-slots { display:flex; gap:8px; }
+.time-slot {
+  background:rgba(255,255,255,0.1);
+  color:var(--white); font-size:12px; padding:4px 12px;
+  font-weight:300; letter-spacing:0.05em;
+}
+.booking-note { font-size:13px; color:rgba(255,255,255,0.5); font-weight:300; margin-top:16px; }
+.booking-channels { display:flex; flex-direction:column; gap:16px; }
+.booking-channel {
+  display:flex; align-items:center; gap:16px;
+  padding:20px 24px; background:var(--cream);
+  text-decoration:none; color:var(--charcoal);
+  transition:background 0.2s, transform 0.15s;
+}
+.booking-channel:hover { background:var(--green-pale); transform:translateX(4px); }
+.channel-icon {
+  width:48px; height:48px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-size:22px;
+}
+.channel-icon.wa { background:#25D366; }
+.channel-icon.fb { background:#1877F2; }
+.channel-label { font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); margin-bottom:2px; }
+.channel-value { font-size:15px; font-weight:400; }
+.booking-address {
+  margin-top:32px; padding:20px 24px;
+  background:var(--cream); font-size:14px; font-weight:300;
+  color:var(--charcoal-mid); line-height:1.7;
+  border-left:3px solid var(--terra);
+}
+.booking-address strong { display:block; color:var(--charcoal); font-weight:500; margin-bottom:4px; }
+
+/* FOOTER */
+footer {
+  background:var(--charcoal); padding:48px 64px;
+  display:flex; justify-content:space-between; align-items:center;
+  border-top:3px solid var(--green);
+}
+.footer-brand { font-family:'Lora',serif; font-size:20px; color:var(--white); }
+.footer-brand em { font-style:italic; color:var(--gold); }
+.footer-text { font-size:13px; color:rgba(255,255,255,0.4); font-weight:300; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.fade-up { opacity:0; animation:fadeUp 0.8s ease forwards; }
+.d1{animation-delay:0.1s} .d2{animation-delay:0.25s} .d3{animation-delay:0.4s} .d4{animation-delay:0.55s} .d5{animation-delay:0.7s}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav { padding:14px 24px; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; }
+  .hero-right { height:360px; grid-template-rows:1fr; }
+  .hero-img-row { display:none; }
+  .hero-img-main { height:100%; }
+  .hero-left { padding:60px 24px; }
+  .about { grid-template-columns:1fr; gap:48px; padding:60px 24px; }
+  .about-img-tag { right:0; bottom:-16px; }
+  .classes-featured { grid-template-columns:1fr; }
+  .classes-more { grid-template-columns:1fr 1fr; }
+  .dishes-grid { grid-template-columns:1fr 1fr; }
+  .reviews-grid { grid-template-columns:1fr; }
+  .booking { grid-template-columns:1fr; }
+  .booking-left,.booking-right { padding:60px 24px; }
+  section { padding:64px 24px; }
+  footer { flex-direction:column; gap:12px; text-align:center; padding:32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div style="background:var(--terra);color:white;text-align:center;padding:10px 24px;font-size:13px;font-weight:500;letter-spacing:0.05em;position:fixed;top:0;left:0;right:0;z-index:200;">
+  🎨 DEMO WEBSITE — Created by <strong>Kangshifu1980</strong> · Web Design Saigon · <a href="https://kangshifu1980.github.io/Mauri/" target="_blank" style="color:white;text-decoration:underline;font-weight:400;">View portfolio</a>
+</div>
+
+<nav style="top:41px;">
+  <a href="#" class="nav-brand">Lua's <em>Kitchen</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">About Lua</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#booking">Book Now</a></li>
+  </ul>
+  <a href="#booking" class="nav-book">Book a Class</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;padding-top:109px;">
+  <div class="hero-left">
+    <div class="hero-tag fade-up d1">Vietnamese Cooking Classes · Saigon</div>
+    <h1 class="fade-up d2">Cook Vietnamese food<br><em>24 floors above</em><br>the Saigon River</h1>
+    <p class="hero-location fade-up d3">Copac Square, Quận 4 · Ho Chi Minh City</p>
+    <p class="hero-desc fade-up d3">Learn authentic Vietnamese recipes in Lua's real home kitchen — with river views, fresh market ingredients, and stories shared over a home-cooked meal.</p>
+    <div class="hero-ctas fade-up d4">
+      <a href="#classes" class="btn-green">See all classes</a>
+      <a href="#booking" class="btn-outline-green">Book now</a>
+    </div>
+    <div class="hero-trust fade-up d5">
+      <div class="trust-item">
+        <span class="trust-num">3,000+</span>
+        <span class="trust-label">Guests hosted</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">5.0★</span>
+        <span class="trust-label">131 reviews on Cookly</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">7yrs</span>
+        <span class="trust-label">Experience teaching</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-main">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Vietnamese cooking class">
+      <div class="hero-float-badge">
+        <div>
+          <div class="badge-stars">★★★★★</div>
+          <div class="badge-text"><strong>5.0 on Cookly</strong>131 verified reviews</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-img-row">
+      <div class="hero-img-small">
+        <img src="https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?w=400&q=80" alt="Fresh Vietnamese ingredients">
+      </div>
+      <div class="hero-img-small">
+        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80" alt="Vietnamese food">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img">
+    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80" alt="Lua teaching cooking">
+    <div class="about-img-tag">
+      <span class="num">10</span>
+      <span class="lbl">years as a paralegal<br>before following her passion</span>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="section-tag">About Lua</div>
+    <h2 class="section-title">From law firm to <em>home kitchen</em></h2>
+    <p>After 10 years working in a law firm, Lua Le decided to follow her true passion — sharing the food she grew up cooking. Originally from Northern Vietnam and having lived in Saigon for 27 years, she brings both sides of Vietnamese cuisine together in every class.</p>
+    <p>Lua first learned to cook at age five, learning traditional family recipes that she's been refining ever since. Her classes aren't just about food — they're about culture, conversation, and feeling at home in Vietnam.</p>
+    <div class="about-quote">"I would like to help travelers have the best, most unique experience and help them discover the city as much as possible."</div>
+    <div class="about-skills">
+      <span class="skill-tag">North & South Vietnamese cuisine</span>
+      <span class="skill-tag">Vegan & vegetarian friendly</span>
+      <span class="skill-tag">Halal options available</span>
+      <span class="skill-tag">English speaking</span>
+      <span class="skill-tag">Market tours</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section class="classes" id="classes">
+  <div class="section-tag">Classes & Workshops</div>
+  <h2 class="section-title">Choose your <em>experience</em></h2>
+  <p class="classes-intro">All classes take place in Lua's real home kitchen on the 24th floor with panoramic views of the Saigon River. Small groups only — so you get personal attention and a genuine home cooking experience.</p>
+
+  <div class="classes-featured">
+    <div class="class-card featured">
+      <div class="class-img">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Vietnamese cooking class">
+      </div>
+      <div class="class-body">
+        <div class="class-meta">
+          <span class="class-meta-item">2.5 hours</span>
+          <span class="class-meta-item">Small group</span>
+          <span class="class-meta-item">3× daily</span>
+        </div>
+        <h3 class="class-name">Vietnamese Homestyle Cooking Class</h3>
+        <p class="class-desc">Cook 3 traditional Vietnamese dishes from scratch in Lua's home kitchen. Choose your menu in advance — vegan, vegetarian, and halal all welcome. Recipes sent home afterwards.</p>
+        <ul class="class-includes">
+          <li>Choose 3 dishes to cook</li>
+          <li>Fresh ingredients, no MSG</li>
+          <li>Sit down to eat your meal together</li>
+          <li>Recipes emailed after class</li>
+          <li>Vegan / vegetarian / halal options</li>
+        </ul>
+        <div class="class-footer">
+          <div class="class-price">$45 <span>per person</span></div>
+          <a href="#booking" class="btn-book">Book now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card secondary">
+      <div class="class-img">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80" alt="Bánh Mì baking workshop">
+      </div>
+      <div class="class-body">
+        <div class="class-meta">
+          <span class="class-meta-item">3.5 hours</span>
+          <span class="class-meta-item">Beginner friendly</span>
+          <span class="class-meta-item">3× daily</span>
+        </div>
+        <h3 class="class-name">Bánh Mì Baking Workshop</h3>
+        <p class="class-desc">Learn to bake authentic Vietnamese baguettes from scratch — the iconic bánh mì. Hands-on from dough to oven. Take home your own freshly baked loaf. Salt coffee included.</p>
+        <ul class="class-includes">
+          <li>Make bánh mì from scratch</li>
+          <li>Learn authentic Vietnamese bread techniques</li>
+          <li>Salt coffee tea break included</li>
+          <li>Take your loaf home</li>
+          <li>Troubleshooting tips for baking at home</li>
+        </ul>
+        <div class="class-footer">
+          <div class="class-price">$69 <span>per person</span></div>
+          <a href="#booking" class="btn-book">Book now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="classes-more">
+    <div class="class-mini">
+      <div class="class-mini-icon">🛵</div>
+      <div class="class-mini-name">Street Food Tour</div>
+      <div class="class-mini-desc">Explore Saigon's street food scene with Lua as your local guide.</div>
+    </div>
+    <div class="class-mini">
+      <div class="class-mini-icon">☕</div>
+      <div class="class-mini-name">Coffee Workshop</div>
+      <div class="class-mini-desc">Discover Vietnamese coffee culture — from cà phê sữa đá to egg coffee.</div>
+    </div>
+    <div class="class-mini">
+      <div class="class-mini-icon">🏠</div>
+      <div class="class-mini-name">Home Dining</div>
+      <div class="class-mini-desc">A private dinner experience — enjoy a full Vietnamese home-cooked meal.</div>
+    </div>
+    <div class="class-mini">
+      <div class="class-mini-icon">👨‍🍳</div>
+      <div class="class-mini-name">Restaurant Recipes</div>
+      <div class="class-mini-desc">Learn professional Vietnamese restaurant techniques and plating.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DISHES -->
+<section class="dishes" id="dishes">
+  <div class="section-tag">What you'll cook</div>
+  <h2 class="section-title">Fresh ingredients, <em>real recipes</em></h2>
+  <div class="dishes-grid">
+    <div class="dish-item">
+      <span class="dish-emoji">🌿</span>
+      <div class="dish-name">Fresh Spring Rolls</div>
+      <div class="dish-desc">Gỏi cuốn — delicate rice paper rolls filled with herbs, prawns, and glass noodles. Light, fresh, and iconic.</div>
+    </div>
+    <div class="dish-item">
+      <span class="dish-emoji">🍜</span>
+      <div class="dish-name">Phở Bò</div>
+      <div class="dish-desc">Vietnam's national dish — slow-simmered beef broth with rice noodles, herbs, and spices. Learn the secrets.</div>
+    </div>
+    <div class="dish-item">
+      <span class="dish-emoji">🐠</span>
+      <div class="dish-name">Turmeric Fish Noodles</div>
+      <div class="dish-desc">Bún chả cá — fragrant turmeric-spiced fish with rice vermicelli and fresh dill. A Lua signature.</div>
+    </div>
+    <div class="dish-item">
+      <span class="dish-emoji">🥖</span>
+      <div class="dish-name">Bánh Mì</div>
+      <div class="dish-desc">Vietnam's legendary baguette — learn to make the dough, achieve the perfect crust, and fill it your way.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="section-tag">Reviews</div>
+  <h2 class="section-title">What guests <em>say</em></h2>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">What a sweet, calm and professional woman! I learned a lot and then had a delicious meal! The food was incredible and the setting — her home above the river — made it completely unforgettable.</p>
+      <div class="review-author">
+        <div class="review-avatar">J</div>
+        <div>
+          <div class="review-name">Jaklien K.</div>
+          <div class="review-source">Verified via Cookly · April 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Lua is a great instructor and a great chef. The food was delicious and I have some great recipes to bring home. I was the only vegetarian in a group of 8 and Lua easily accommodated me.</p>
+      <div class="review-author">
+        <div class="review-avatar">A</div>
+        <div>
+          <div class="review-name">Alexandra B.</div>
+          <div class="review-source">Verified via Cookly · February 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">A complete treat. Lua was so welcoming and detailed. Truly an inspirational teacher who really knows her stuff. You gotta try a class to experience it for yourself — I highly recommend to anyone.</p>
+      <div class="review-author">
+        <div class="review-avatar">M</div>
+        <div>
+          <div class="review-name">Michelle L.</div>
+          <div class="review-source">Verified via Cookly · December 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="reviews-rating">Rated <strong>5.0 / 5.0</strong> based on 131 verified reviews · <strong>3,000+ guests</strong> hosted since 2017</p>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking" style="padding:0;">
+  <div class="booking-left">
+    <div class="section-tag">Book a class</div>
+    <h2 class="section-title">Ready to <em>cook with Lua?</em></h2>
+    <p style="font-size:17px;font-weight:300;color:var(--charcoal-mid);margin-bottom:40px;line-height:1.9;">Message Lua directly to reserve your spot. Classes run daily with morning, afternoon and evening sessions available — she'll find the time that works for you.</p>
+    <div class="booking-channels">
+      <a href="https://wa.me/84918796791" target="_blank" class="booking-channel">
+        <div class="channel-icon wa">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+        </div>
+        <div>
+          <div class="channel-label">WhatsApp</div>
+          <div class="channel-value">+84 918 796 791</div>
+        </div>
+      </a>
+      <a href="https://zalo.me/84918796791" target="_blank" class="booking-channel">
+        <div class="channel-icon" style="background:#006AF5;color:white;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;">Zalo</div>
+        <div>
+          <div class="channel-label">Zalo</div>
+          <div class="channel-value">+84 918 796 791</div>
+        </div>
+      </a>
+      <a href="https://www.facebook.com/luakitchenvn" target="_blank" class="booking-channel">
+        <div class="channel-icon fb">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </div>
+        <div>
+          <div class="channel-label">Facebook</div>
+          <div class="channel-value">Lua's Kitchen</div>
+        </div>
+      </a>
+    </div>
+    <div class="booking-address">
+      <strong>Location</strong>
+      Unit 20-A3, Block A, Copac Square Building<br>
+      135/1/72 Nguyễn Hữu Cảnh, Quận 4<br>
+      Ho Chi Minh City · 24th floor
+    </div>
+  </div>
+
+  <div class="booking-right">
+    <div class="section-tag">Session times</div>
+    <h2 class="section-title">Classes run <em>daily</em></h2>
+    <div class="booking-times">
+      <div class="booking-time-row">
+        <span class="booking-time-label">🍳 Cooking Class ($45)</span>
+        <div class="booking-time-slots">
+          <span class="time-slot">10:30am</span>
+          <span class="time-slot">2:30pm</span>
+          <span class="time-slot">6:30pm</span>
+        </div>
+      </div>
+      <div class="booking-time-row">
+        <span class="booking-time-label">🥖 Bánh Mì Workshop ($69)</span>
+        <div class="booking-time-slots">
+          <span class="time-slot">10:00am</span>
+          <span class="time-slot">2:00pm</span>
+          <span class="time-slot">6:00pm</span>
+        </div>
+      </div>
+      <div class="booking-time-row">
+        <span class="booking-time-label">🛵 Street Food Tour</span>
+        <div class="booking-time-slots">
+          <span class="time-slot">On request</span>
+        </div>
+      </div>
+    </div>
+    <p class="booking-note">📌 Groups of 1–12 welcome · Dietary needs always accommodated · Recipes sent to you after class</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Lua's <em>Kitchen</em></div>
+  <div class="footer-text">Copac Square, Quận 4 · Ho Chi Minh City · Vietnam</div>
+  <div class="footer-text">© 2026 Lua's Kitchen</div>
+</footer>
+
+</body>
+</html>
